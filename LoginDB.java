@@ -19,7 +19,7 @@ public class LoginDB {
 			conn=getConnection();							
 			if(conn!=null){									
 				sql="select * from users where user_name='"+uid+"'"+
-				" and password='"+pwd+"'";
+				" and password='"+pwd+"';";
 				stmt=conn.createStatement();				
 				rs=stmt.executeQuery(sql);					
 				if(rs.next()){result="success";}			
@@ -35,7 +35,31 @@ public class LoginDB {
 		}
 		return result;										
 	}
-	
+	public static String uidDuplication(String uid){
+		String result="fail";
+		Connection conn=null;Statement stmt=null;			 
+		ResultSet rs=null;String sql=null;
+		try{
+			conn=getConnection();							
+			if(conn!=null){									
+				sql="select * from users where user_name='"+uid+"';";
+				stmt=conn.createStatement();				
+				rs=stmt.executeQuery(sql);					
+				if(rs.next()){result="fail";}
+				else {result="success";}
+			}}
+		catch(SQLException e){e.printStackTrace();}			
+		finally{
+			try{
+				if(rs!=null){rs.close();rs=null;}			
+				if(stmt!=null){stmt.close();stmt=null;}		
+				if(conn!=null){conn.close();conn=null;}		
+			}
+			catch(SQLException e){e.printStackTrace();}		
+		}
+		return result;		
+	}
+
 	public static String Register(String uid,String pwd ,String name,String sex,String age,String tel,String address,String email,String icon_path){
 		String result="fail";
 		Connection conn=null;Statement stmt=null;			 

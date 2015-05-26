@@ -49,7 +49,8 @@ public class LoginBean {
 	public String register(){
 		String result="fail";
 		
-		result = LoginDB.Register(uid, pwd, name, sex, age, tel, address, email, icon_path);
+		if(LoginDB.uidDuplication(uid).compareTo("success")==0)
+			result = LoginDB.Register(uid, pwd, name, sex, age, tel, address, email, icon_path);
 		
 		return result;
 	}

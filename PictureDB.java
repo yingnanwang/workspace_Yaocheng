@@ -11,9 +11,9 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 public class PictureDB {
-	public static int[]getID(String uid){//通过用户id得到图片id数组
+	public static String[]getID(String uid){//通过用户id得到图片id数组
 
-		int []result = null;
+		String []result = null;
 		Connection conn=null;Statement stmt=null;			 
 		ResultSet rs=null;String sql=null;
 		try{
@@ -24,10 +24,10 @@ public class PictureDB {
 				rs=stmt.executeQuery(sql);	
 				int count = rs.getRow();
 				if(count != 0){
-					result = new int[count];
+					result = new String[count];
 					int i = 0;
 					while(rs.next()){
-						result[i] = rs.getInt(1);
+						result[i] = rs.getString(1);
 						i++;
 					}
 					return result;
@@ -151,14 +151,14 @@ public class PictureDB {
 		return null;
 	}
 	
-	public static String setFav(int pic_id,int fav){//根据图片id修改点赞次数
+	public static String setFav(String pic_id,int fav){//根据图片id修改点赞次数
 		String result = "fail";
 		Connection conn=null;Statement stmt=null;			 
 		int rs=0;String sql=null;
 		try{
 			conn=getConnection();							
 			if(conn!=null){									
-				sql="update pictures set pictures.favourite = "+fav+" where picture_id = "+pic_id+";";
+				sql="update pictures set pictures.favourite = "+fav+" where picture_id = '"+pic_id+"';";
 				stmt=conn.createStatement();				
 				rs=stmt.executeUpdate(sql);	
 				if(rs>0)
@@ -177,14 +177,14 @@ public class PictureDB {
 		return result;
 	}
 	
-	public static String deletePic(int pic_id){//根据图片id删除
+	public static String deletePic(String pic_id){//根据图片id删除
 		String result = "fail";
 		Connection conn=null;Statement stmt=null;			 
 		int rs=0;String sql=null;
 		try{
 			conn=getConnection();							
 			if(conn!=null){									
-				sql="delete pictures where picture_id = "+pic_id+";";
+				sql="delete pictures where picture_id = '"+pic_id+"';";
 				stmt=conn.createStatement();				
 				rs=stmt.executeUpdate(sql);	
 				if(rs>0)
@@ -203,14 +203,14 @@ public class PictureDB {
 		return result;
 	}
 	
-	public static String addPic(int pic_id,String pic_title,String uid,int fav,String path){//插入新条目
+	public static String addPic(String pic_id,String pic_title,String uid,int fav,String path){//插入新条目
 		String result = "fail";
 		Connection conn=null;Statement stmt=null;			 
 		int rs=0;String sql=null;
 		try{
 			conn=getConnection();							
 			if(conn!=null){									
-				sql="insert into pictures values("+pic_id+",'"+pic_title+"','"+uid+"',"+fav+",'"+path+"');";
+				sql="insert into pictures values('"+pic_id+"','"+pic_title+"','"+uid+"',"+fav+",'"+path+"');";
 				stmt=conn.createStatement();				
 				rs=stmt.executeUpdate(sql);	
 				if(rs>0)

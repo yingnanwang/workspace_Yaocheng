@@ -35,22 +35,22 @@ public class UserDB{
 		return result;		
 	}
 	
-	public static String changeIconPath(String id,String path){
+	public static String changeIconPath(String id,String path){//改用户头像
 		String result="fail";								 
 		Connection conn=null;Statement stmt=null;			 
-		ResultSet rs=null;String sql=null;					
+		int rs=0;String sql=null;					
 		try{
 			conn = getConnection();							
 			if(conn!=null){									
 				sql="update users set users.address = '"+path+"' where user_id = '"+id+"';";
 				stmt=conn.createStatement();				
-				rs=stmt.executeQuery(sql);					
-				if(rs.next()){result="success";}			
+				rs=stmt.executeUpdate(sql);					
+				if(rs>0){result="success";}			
 			}}
 		catch(SQLException e){e.printStackTrace();}			
 		finally{
 			try{
-				if(rs!=null){rs.close();rs=null;}			
+						
 				if(stmt!=null){stmt.close();stmt=null;}		
 				if(conn!=null){conn.close();conn=null;}		
 			}

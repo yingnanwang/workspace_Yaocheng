@@ -10,24 +10,49 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-public class PictureDB {
-	public static int[]getID(String uid){//通过用户id得到图片id数组
-
-		int []result = null;
+public class MessageDB {
+	public static String insertMessage(String mid,String cont,String sender,String receiver,String time){//插入
+		String result = "fail";
+		Connection conn=null;Statement stmt=null;			 
+		int rs=0;String sql=null;
+		try{
+			conn=getConnection();							
+			if(conn!=null){									
+				sql="insert into messages values('"+mid+"','"+cont+"','"+sender+"','"+receiver+"','"+time+"');";
+				stmt=conn.createStatement();				
+				rs=stmt.executeUpdate(sql);	
+				if(rs>0)
+					result = "success";
+				
+			}}
+		catch(SQLException e){e.printStackTrace();}			
+		finally{
+			try{
+				
+				if(stmt!=null){stmt.close();stmt=null;}		
+				if(conn!=null){conn.close();conn=null;}		
+			}
+			catch(SQLException e){e.printStackTrace();}		
+		}
+		return result;
+	}
+	
+	public static String[]getID(String receiver){//通过receiver id 得到消息id数组
+		String []result = null;
 		Connection conn=null;Statement stmt=null;			 
 		ResultSet rs=null;String sql=null;
 		try{
 			conn=getConnection();							
 			if(conn!=null){									
-				sql="select * from pictures where user_name='"+uid+"';";
+				sql="select * from messages where receiver='"+receiver+"';";
 				stmt=conn.createStatement();				
 				rs=stmt.executeQuery(sql);	
 				int count = rs.getRow();
 				if(count != 0){
-					result = new int[count];
+					result = new String[count];
 					int i = 0;
 					while(rs.next()){
-						result[i] = rs.getInt(1);
+						result[i] = rs.getString(1);
 						i++;
 					}
 					return result;
@@ -46,15 +71,14 @@ public class PictureDB {
 		return null;
 	}
 	
-	public static String[]getTitle(String uid){//通过用户id得到图片标题数组
-
+	public static String[]getContent(String receiver){//通过receiver id 得到消息contents数组
 		String []result = null;
 		Connection conn=null;Statement stmt=null;			 
 		ResultSet rs=null;String sql=null;
 		try{
 			conn=getConnection();							
 			if(conn!=null){									
-				sql="select * from pictures where user_name='"+uid+"';";
+				sql="select * from messages where receiver='"+receiver+"';";
 				stmt=conn.createStatement();				
 				rs=stmt.executeQuery(sql);	
 				int count = rs.getRow();
@@ -81,15 +105,48 @@ public class PictureDB {
 		return null;
 	}
 	
-	public static String[]getPath(String uid){//通过用户id得到图片路径数组
-
+	public static String[]getSender(String receiver){//通过receiver id 得到sender id数组
 		String []result = null;
 		Connection conn=null;Statement stmt=null;			 
 		ResultSet rs=null;String sql=null;
 		try{
 			conn=getConnection();							
 			if(conn!=null){									
-				sql="select * from pictures where user_name='"+uid+"';";
+				sql="select * from messages where receiver='"+receiver+"';";
+				stmt=conn.createStatement();				
+				rs=stmt.executeQuery(sql);	
+				int count = rs.getRow();
+				if(count != 0){
+					result = new String[count];
+					int i = 0;
+					while(rs.next()){
+						result[i] = rs.getString(3);
+						i++;
+					}
+					return result;
+				}
+				else return null;
+			}}
+		catch(SQLException e){e.printStackTrace();}			
+		finally{
+			try{
+				if(rs!=null){rs.close();rs=null;}			
+				if(stmt!=null){stmt.close();stmt=null;}		
+				if(conn!=null){conn.close();conn=null;}		
+			}
+			catch(SQLException e){e.printStackTrace();}		
+		}
+		return null;
+	}
+	
+	public static String[]getTime(String receiver){//通过receiver id 得到time数组
+		String []result = null;
+		Connection conn=null;Statement stmt=null;			 
+		ResultSet rs=null;String sql=null;
+		try{
+			conn=getConnection();							
+			if(conn!=null){									
+				sql="select * from messages where receiver='"+receiver+"';";
 				stmt=conn.createStatement();				
 				rs=stmt.executeQuery(sql);	
 				int count = rs.getRow();
@@ -114,119 +171,6 @@ public class PictureDB {
 			catch(SQLException e){e.printStackTrace();}		
 		}
 		return null;
-	}
-	
-	public static int[]getFav(String uid){//通过用户id得到图片点赞数组
-
-		int []result = null;
-		Connection conn=null;Statement stmt=null;			 
-		ResultSet rs=null;String sql=null;
-		try{
-			conn=getConnection();							
-			if(conn!=null){									
-				sql="select * from pictures where user_name='"+uid+"';";
-				stmt=conn.createStatement();				
-				rs=stmt.executeQuery(sql);	
-				int count = rs.getRow();
-				if(count != 0){
-					result = new int[count];
-					int i = 0;
-					while(rs.next()){
-						result[i] = rs.getInt(4);
-						i++;
-					}
-					return result;
-				}
-				else return null;
-			}}
-		catch(SQLException e){e.printStackTrace();}			
-		finally{
-			try{
-				if(rs!=null){rs.close();rs=null;}			
-				if(stmt!=null){stmt.close();stmt=null;}		
-				if(conn!=null){conn.close();conn=null;}		
-			}
-			catch(SQLException e){e.printStackTrace();}		
-		}
-		return null;
-	}
-	
-	public static String setFav(int pic_id,int fav){//根据图片id修改点赞次数
-		String result = "fail";
-		Connection conn=null;Statement stmt=null;			 
-		int rs=0;String sql=null;
-		try{
-			conn=getConnection();							
-			if(conn!=null){									
-				sql="update pictures set pictures.favourite = "+fav+" where picture_id = "+pic_id+";";
-				stmt=conn.createStatement();				
-				rs=stmt.executeUpdate(sql);	
-				if(rs>0)
-					result = "success";
-				
-			}}
-		catch(SQLException e){e.printStackTrace();}			
-		finally{
-			try{
-				
-				if(stmt!=null){stmt.close();stmt=null;}		
-				if(conn!=null){conn.close();conn=null;}		
-			}
-			catch(SQLException e){e.printStackTrace();}		
-		}
-		return result;
-	}
-	
-	public static String deletePic(int pic_id){//根据图片id删除
-		String result = "fail";
-		Connection conn=null;Statement stmt=null;			 
-		int rs=0;String sql=null;
-		try{
-			conn=getConnection();							
-			if(conn!=null){									
-				sql="delete pictures where picture_id = "+pic_id+";";
-				stmt=conn.createStatement();				
-				rs=stmt.executeUpdate(sql);	
-				if(rs>0)
-					result = "success";
-				
-			}}
-		catch(SQLException e){e.printStackTrace();}			
-		finally{
-			try{
-				
-				if(stmt!=null){stmt.close();stmt=null;}		
-				if(conn!=null){conn.close();conn=null;}		
-			}
-			catch(SQLException e){e.printStackTrace();}		
-		}
-		return result;
-	}
-	
-	public static String addPic(int pic_id,String pic_title,String uid,int fav,String path){//插入新条目
-		String result = "fail";
-		Connection conn=null;Statement stmt=null;			 
-		int rs=0;String sql=null;
-		try{
-			conn=getConnection();							
-			if(conn!=null){									
-				sql="insert into pictures values("+pic_id+",'"+pic_title+"','"+uid+"',"+fav+",'"+path+"');";
-				stmt=conn.createStatement();				
-				rs=stmt.executeUpdate(sql);	
-				if(rs>0)
-					result = "success";
-				
-			}}
-		catch(SQLException e){e.printStackTrace();}			
-		finally{
-			try{
-				
-				if(stmt!=null){stmt.close();stmt=null;}		
-				if(conn!=null){conn.close();conn=null;}		
-			}
-			catch(SQLException e){e.printStackTrace();}		
-		}
-		return result;
 	}
 	
 	public static Connection getConnection(){				

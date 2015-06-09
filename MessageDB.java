@@ -60,6 +60,7 @@ public class MessageDB {
 				if(count != 0){
 					result = new String[count];
 					int i = 0;
+					result[i++] = rs.getString(1);
 					while(rs.next()){
 						result[i] = rs.getString(1);
 						i++;
@@ -103,6 +104,7 @@ public class MessageDB {
 				if(count != 0){
 					result = new String[count];
 					int i = 0;
+					result[i++] = rs.getString(2);
 					while(rs.next()){
 						result[i] = rs.getString(2);
 						i++;
@@ -146,6 +148,7 @@ public class MessageDB {
 				if(count != 0){
 					result = new String[count];
 					int i = 0;
+					result[i++] = rs.getString(3);
 					while(rs.next()){
 						result[i] = rs.getString(3);
 						i++;
@@ -189,6 +192,7 @@ public class MessageDB {
 				if(count != 0){
 					result = new String[count];
 					int i = 0;
+					result[i++] = rs.getString(5);
 					while(rs.next()){
 						result[i] = rs.getString(5);
 						i++;

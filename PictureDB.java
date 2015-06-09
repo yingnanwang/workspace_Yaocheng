@@ -35,6 +35,7 @@ public class PictureDB {
 				if(count != 0){
 					result = new String[count];
 					int i = 0;
+					result[i++] = rs.getString(1);
 					while(rs.next()){
 						result[i] = rs.getString(1);
 						i++;
@@ -79,6 +80,7 @@ public class PictureDB {
 				if(count != 0){
 					result = new String[count];
 					int i = 0;
+					result[i++] = rs.getString(2);
 					while(rs.next()){
 						result[i] = rs.getString(2);
 						i++;
@@ -123,6 +125,7 @@ public class PictureDB {
 				if(count != 0){
 					result = new String[count];
 					int i = 0;
+					result[i++] = rs.getString(5);
 					while(rs.next()){
 						result[i] = rs.getString(5);
 						i++;
@@ -167,6 +170,7 @@ public class PictureDB {
 				if(count != 0){
 					result = new int[count];
 					int i = 0;
+					result[i++] = rs.getInt(4);
 					while(rs.next()){
 						result[i] = rs.getInt(4);
 						i++;

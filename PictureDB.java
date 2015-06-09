@@ -269,6 +269,182 @@ public class PictureDB {
 		return result;
 	}
 	
+	public static String[] getAllPicTitleByFav(){//根据fav降序输出图片title数组
+		String []result = null;
+		Connection conn=null;Statement stmt=null;			 
+		ResultSet rs=null;String sql=null;
+		try{
+			conn=getConnection();							
+			if(conn!=null){									
+				sql="select * from pictures  order by favourite desc;";
+				stmt=conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);				
+				rs=stmt.executeQuery(sql);	
+				 int count = 0;
+			        try {
+			        	rs.last();
+			            count = rs.getRow();
+			        } catch (Exception e) {
+			            // TODO: handle exception
+			            e.printStackTrace();
+			        }
+			        rs.first();
+			        
+				if(count != 0){
+					result = new String[count];
+					int i = 0;
+					result[i++] = rs.getString(2);
+					while(rs.next()){
+						result[i] = rs.getString(2);
+						i++;
+					}
+					return result;
+				}
+				else return null;
+			}}
+		catch(SQLException e){e.printStackTrace();}			
+		finally{
+			try{
+				if(rs!=null){rs.close();rs=null;}			
+				if(stmt!=null){stmt.close();stmt=null;}		
+				if(conn!=null){conn.close();conn=null;}		
+			}
+			catch(SQLException e){e.printStackTrace();}		
+		}
+		return null;
+	}
+	
+	public static String[] getAllPicUsernameByFav(){//根据fav降序输出图片username数组
+		String []result = null;
+		Connection conn=null;Statement stmt=null;			 
+		ResultSet rs=null;String sql=null;
+		try{
+			conn=getConnection();							
+			if(conn!=null){									
+				sql="select * from pictures  order by favourite desc;";
+				stmt=conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);				
+				rs=stmt.executeQuery(sql);	
+				 int count = 0;
+			        try {
+			        	rs.last();
+			            count = rs.getRow();
+			        } catch (Exception e) {
+			            // TODO: handle exception
+			            e.printStackTrace();
+			        }
+			        rs.first();
+			        
+				if(count != 0){
+					result = new String[count];
+					int i = 0;
+					result[i++] = rs.getString(3);
+					while(rs.next()){
+						result[i] = rs.getString(3);
+						i++;
+					}
+					return result;
+				}
+				else return null;
+			}}
+		catch(SQLException e){e.printStackTrace();}			
+		finally{
+			try{
+				if(rs!=null){rs.close();rs=null;}			
+				if(stmt!=null){stmt.close();stmt=null;}		
+				if(conn!=null){conn.close();conn=null;}		
+			}
+			catch(SQLException e){e.printStackTrace();}		
+		}
+		return null;
+	}
+	
+	public static String[] getAllPicPathByFav(){//根据fav降序输出图片path数组
+		String []result = null;
+		Connection conn=null;Statement stmt=null;			 
+		ResultSet rs=null;String sql=null;
+		try{
+			conn=getConnection();							
+			if(conn!=null){									
+				sql="select * from pictures  order by favourite desc;";
+				stmt=conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);				
+				rs=stmt.executeQuery(sql);	
+				 int count = 0;
+			        try {
+			        	rs.last();
+			            count = rs.getRow();
+			        } catch (Exception e) {
+			            // TODO: handle exception
+			            e.printStackTrace();
+			        }
+			        rs.first();
+			        
+				if(count != 0){
+					result = new String[count];
+					int i = 0;
+					result[i++] = rs.getString(5);
+					while(rs.next()){
+						result[i] = rs.getString(5);
+						i++;
+					}
+					return result;
+				}
+				else return null;
+			}}
+		catch(SQLException e){e.printStackTrace();}			
+		finally{
+			try{
+				if(rs!=null){rs.close();rs=null;}			
+				if(stmt!=null){stmt.close();stmt=null;}		
+				if(conn!=null){conn.close();conn=null;}		
+			}
+			catch(SQLException e){e.printStackTrace();}		
+		}
+		return null;
+	}
+	
+	public static int[] getAllPicFavByFav(){//根据fav降序输出图片fav数组
+		int []result = null;
+		Connection conn=null;Statement stmt=null;			 
+		ResultSet rs=null;String sql=null;
+		try{
+			conn=getConnection();							
+			if(conn!=null){									
+				sql="select * from pictures  order by favourite desc;";
+				stmt=conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);				
+				rs=stmt.executeQuery(sql);	
+				 int count = 0;
+			        try {
+			        	rs.last();
+			            count = rs.getRow();
+			        } catch (Exception e) {
+			            // TODO: handle exception
+			            e.printStackTrace();
+			        }
+			        rs.first();
+			        
+				if(count != 0){
+					result = new int[count];
+					int i = 0;
+					result[i++] = rs.getInt(4);
+					while(rs.next()){
+						result[i] = rs.getInt(4);
+						i++;
+					}
+					return result;
+				}
+				else return null;
+			}}
+		catch(SQLException e){e.printStackTrace();}			
+		finally{
+			try{
+				if(rs!=null){rs.close();rs=null;}			
+				if(stmt!=null){stmt.close();stmt=null;}		
+				if(conn!=null){conn.close();conn=null;}		
+			}
+			catch(SQLException e){e.printStackTrace();}		
+		}
+		return null;
+	}
+	
 	public static Connection getConnection(){				
 		Connection conn=null;								
 		try{

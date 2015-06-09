@@ -13,3 +13,8 @@ CREATE TABLE pictures(picture_id varchar(256) primary key,picture_title varchar(
 CREATE TABLE messages(id varchar(256) primary key,content varchar(256),sender varchar(20),receiver varchar(20),time varchar(256));
 
 insert into admin(user_name,password) values('admin','admin');
+
+drop table pictures;
+insert into pictures values('1212','31323','32131',1,'3213');
+insert into pictures values('1213','31323','32131',2,'3213');
+select * from pictures  order by favourite desc;

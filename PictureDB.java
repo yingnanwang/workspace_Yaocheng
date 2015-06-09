@@ -11,7 +11,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 public class PictureDB {
-	public static String[]getID(String uid){//通过用户id得到图片id数组
+	public static String[] getID(String uid){//通过用户id得到图片id数组
 
 		String []result = null;
 		Connection conn=null;Statement stmt=null;			 
@@ -56,7 +56,7 @@ public class PictureDB {
 		return null;
 	}
 	
-	public static String[]getTitle(String uid){//通过用户id得到图片标题数组
+	public static String[] getTitle(String uid){//通过用户id得到图片标题数组
 
 		String []result = null;
 		Connection conn=null;Statement stmt=null;			 
@@ -101,7 +101,7 @@ public class PictureDB {
 		return null;
 	}
 	
-	public static String[]getPath(String uid){//通过用户id得到图片路径数组
+	public static String[] getPath(String uid){//通过用户id得到图片路径数组
 
 		String []result = null;
 		Connection conn=null;Statement stmt=null;			 
@@ -146,7 +146,7 @@ public class PictureDB {
 		return null;
 	}
 	
-	public static int[]getFav(String uid){//通过用户id得到图片点赞数组
+	public static int[] getFav(String uid){//通过用户id得到图片点赞数组
 
 		int []result = null;
 		Connection conn=null;Statement stmt=null;			 
@@ -267,6 +267,50 @@ public class PictureDB {
 			catch(SQLException e){e.printStackTrace();}		
 		}
 		return result;
+	}
+	
+	public static String[] getAllPicIDByFav(){//根据fav降序输出图片title数组
+		String []result = null;
+		Connection conn=null;Statement stmt=null;			 
+		ResultSet rs=null;String sql=null;
+		try{
+			conn=getConnection();							
+			if(conn!=null){									
+				sql="select * from pictures  order by favourite desc;";
+				stmt=conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);				
+				rs=stmt.executeQuery(sql);	
+				 int count = 0;
+			        try {
+			        	rs.last();
+			            count = rs.getRow();
+			        } catch (Exception e) {
+			            // TODO: handle exception
+			            e.printStackTrace();
+			        }
+			        rs.first();
+			        
+				if(count != 0){
+					result = new String[count];
+					int i = 0;
+					result[i++] = rs.getString(1);
+					while(rs.next()){
+						result[i] = rs.getString(1);
+						i++;
+					}
+					return result;
+				}
+				else return null;
+			}}
+		catch(SQLException e){e.printStackTrace();}			
+		finally{
+			try{
+				if(rs!=null){rs.close();rs=null;}			
+				if(stmt!=null){stmt.close();stmt=null;}		
+				if(conn!=null){conn.close();conn=null;}		
+			}
+			catch(SQLException e){e.printStackTrace();}		
+		}
+		return null;
 	}
 	
 	public static String[] getAllPicTitleByFav(){//根据fav降序输出图片title数组

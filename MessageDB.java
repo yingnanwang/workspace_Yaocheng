@@ -45,9 +45,18 @@ public class MessageDB {
 			conn=getConnection();							
 			if(conn!=null){									
 				sql="select * from messages where receiver='"+receiver+"';";
-				stmt=conn.createStatement();				
+				stmt=conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);				
 				rs=stmt.executeQuery(sql);	
-				int count = rs.getRow();
+				 int count = 0;
+			        try {
+			        	rs.last();
+			            count = rs.getRow();
+			        } catch (Exception e) {
+			            // TODO: handle exception
+			            e.printStackTrace();
+			        }
+			        rs.first();
+			        
 				if(count != 0){
 					result = new String[count];
 					int i = 0;
@@ -79,9 +88,18 @@ public class MessageDB {
 			conn=getConnection();							
 			if(conn!=null){									
 				sql="select * from messages where receiver='"+receiver+"';";
-				stmt=conn.createStatement();				
+				stmt=conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);				
 				rs=stmt.executeQuery(sql);	
-				int count = rs.getRow();
+				 int count = 0;
+			        try {
+			        	rs.last();
+			            count = rs.getRow();
+			        } catch (Exception e) {
+			            // TODO: handle exception
+			            e.printStackTrace();
+			        }
+			        rs.first();
+			        
 				if(count != 0){
 					result = new String[count];
 					int i = 0;
@@ -113,9 +131,18 @@ public class MessageDB {
 			conn=getConnection();							
 			if(conn!=null){									
 				sql="select * from messages where receiver='"+receiver+"';";
-				stmt=conn.createStatement();				
+				stmt=conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);				
 				rs=stmt.executeQuery(sql);	
-				int count = rs.getRow();
+				 int count = 0;
+			        try {
+			        	rs.last();
+			            count = rs.getRow();
+			        } catch (Exception e) {
+			            // TODO: handle exception
+			            e.printStackTrace();
+			        }
+			        rs.first();
+			        
 				if(count != 0){
 					result = new String[count];
 					int i = 0;
@@ -147,9 +174,18 @@ public class MessageDB {
 			conn=getConnection();							
 			if(conn!=null){									
 				sql="select * from messages where receiver='"+receiver+"';";
-				stmt=conn.createStatement();				
+				stmt=conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);				
 				rs=stmt.executeQuery(sql);	
-				int count = rs.getRow();
+				 int count = 0;
+			        try {
+			        	rs.last();
+			            count = rs.getRow();
+			        } catch (Exception e) {
+			            // TODO: handle exception
+			            e.printStackTrace();
+			        }
+			        rs.first();
+			        
 				if(count != 0){
 					result = new String[count];
 					int i = 0;
